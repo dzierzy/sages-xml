@@ -51,6 +51,7 @@ public class DOMTrainingParser {
                 System.out.println("id: " + id);
 
                 // TODO show first and last name
+
             }
         }
     }

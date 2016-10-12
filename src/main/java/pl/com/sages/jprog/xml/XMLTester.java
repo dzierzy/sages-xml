@@ -11,16 +11,16 @@ import pl.com.sages.jprog.xml.xsl.XSLStudentsTransform;
 public class XMLTester {
     public static void main(String[] args) throws Exception {
 
-        System.out.println("dom:");
-        //new DOMTrainingParser().parseStudents();
+        System.out.println("<< DOM >>");
+        new DOMTrainingParser().parseStudents();
 
-        System.out.println("sax");
-        //new SaxTrainingParser.parseStudents();
+        System.out.println("<< SAX >>");
+        new SaxTrainingParser().parseStudents();
 
-        System.out.println("xpath");
-        //new  XPathStudents().parseStudents();
+        System.out.println("<< XPATH >>");
+        new  XPathStudents().parseStudents();
 
-        System.out.println("xslt");
-        //new XSLStudentsTransform().transformStudents();
+        System.out.println("<< XSLT >>");
+        new XSLStudentsTransform().transformStudents();
     }
 }

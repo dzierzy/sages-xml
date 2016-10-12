@@ -23,7 +23,7 @@ public class XPathStudents{
         XPathFactory xPathfactory = XPathFactory.newInstance();
         XPath xpath = xPathfactory.newXPath();
 
-        XPathExpression expr = xpath.compile("/training/students/student");
+        XPathExpression expr = xpath.compile("//student[@id='1']");
         NodeList students = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
         domParser.presentStudents(students);
 

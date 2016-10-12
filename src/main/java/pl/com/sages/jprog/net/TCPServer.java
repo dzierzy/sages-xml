@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by marcin on 05.10.2016.
@@ -15,35 +17,36 @@ public class TCPServer {
 
     public static void main(String[] args) {
         try {
+
             ServerSocket server = new ServerSocket(3000);
-            while(true) {
-                // Wywołanie blokujące (accept)
-                Socket connection = server.accept();
-                System.out.println("connected...");
 
-                PrintWriter writer = new PrintWriter(	connection.getOutputStream());
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            ExecutorService es = Executors.newFixedThreadPool(2);
 
-                writer.println("Hello!");
-                writer.flush();
+            System.out.println("waiting for a client on port " + server.getLocalPort() + " ...");
+            Socket connection = server.accept();
+            System.out.println("<< connected >>");
 
-                Scanner scanner = new Scanner(System.in);
-                String msg = "";
-                String received = "";
-                while(!"quit".equalsIgnoreCase(msg) && received!=null){
-                    System.out.print(">> ");
-                    msg=scanner.nextLine();
-                    writer.println(msg);
-                    writer.flush();
-                    received = reader.readLine();
-                    System.out.println("received: " + received);
+            PrintWriter writer = new PrintWriter(connection.getOutputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                }
+            writer.println("Hey! Anybody there?");
+            writer.flush();
 
-                writer.flush();
-                connection.close();
-            }
-        } catch (IOException e) { }
+            // writer thread
+            Runnable writerThread = new MessageWriter(writer);
+            es.execute(writerThread);
+
+            // reader thread
+            Runnable readerThread = new MessageReader(reader);
+            es.execute(readerThread);
+
+            //connection.close();
+
+            es.shutdown();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -1,12 +1,12 @@
 <training date="06-10-2016">
     <trainer>
         <firstName>Marcin</firstName>
-        <lastName>Dzierzak</lastName>
+        <lastName>D</lastName>
     </trainer>
     <students>
         <student id="1">
-            <firstName>Jakub</firstName>
-            <lastName>K</lastName>
+            <firstName>Jacek</firstName>
+            <lastName>S</lastName>
         </student>
         <student id="2">
             <firstName>Aleksander</firstName>
